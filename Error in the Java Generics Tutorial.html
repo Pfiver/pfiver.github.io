@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Error in the Java Generics Tutorial</title>
+<link rel="important stylesheet" href="chrome://messagebody/skin/messageBody.css">
+</head>
+<body>
+<table border=0 cellspacing=0 cellpadding=0 width="100%" class="header-part1"><tr><td><b>Subject: </b>Error in the Java Generics Tutorial</td></tr><tr><td><b>From: </b>Patrick Pfeifer &lt;patrick@patrickpfeifer.net&gt;</td></tr><tr><td><b>Date: </b>2017-03-15, 09:54</td></tr></table><table border=0 cellspacing=0 cellpadding=0 width="100%" class="header-part2"><tr><td><b>To: </b>javasedocs_us@oracle.com</td></tr></table><br>
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; ">
+  </head>
+  <body bgcolor="#FFFFFF" text="#000000">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    Dear Oracle Java Documentation Team<br>
+    <br>
+    Today I have found an error in the  Java Generics Tutorial. Do you
+    agree that this should be fixed ?<br>
+    <br>
+<a class="moz-txt-link-freetext" href="https://docs.oracle.com/javase/tutorial/java/generics/bridgeMethods.html">https://docs.oracle.com/javase/tutorial/java/generics/bridgeMethods.html</a><br>
+    <br>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <p>There is a discrepancy between what the tutorial says and what
+      the Java 8 platform is actually doing.</p>
+    <p>I.e. according to the <a
+href="https://docs.oracle.com/javase/tutorial/java/generics/bridgeMethods.html"
+        rel="nofollow noreferrer">tutorial</a>, <a
+        href="https://ideone.com/3YAkYS" rel="nofollow noreferrer">the
+        code</a> should throw a ClassCastException on line 6 (counting
+      from<code><span class="kwd"> class</span><span class="pln"> </span><span
+          class="typ">NodeMain</span><span class="pln"></span></code>).
+      But instead, it throws one on line 5, near <code>n.setData("Hello");</code>
+      already.</p>
+    <p>This is the code:</p>
+    <pre class="lang-java prettyprint prettyprinted" style=""><code><span class="kwd">class</span><span class="pln"> </span><span class="typ">NodeMain</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">MyNode</span><span class="pln"> mn </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">MyNode</span><span class="pun">(</span><span class="lit">5</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">Node</span><span class="pln"> n </span><span class="pun">=</span><span class="pln"> mn</span><span class="pun">;</span><span class="pln">            </span><span class="com">// A raw type - compiler throws an unchecked warning</span><span class="pln">
+        n</span><span class="pun">.</span><span class="pln">setData</span><span class="pun">(</span><span class="str">"Hello"</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">Integer</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> mn</span><span class="pun">.</span><span class="pln">data</span><span class="pun">;</span><span class="pln">    </span><span class="com">// Causes a ClassCastException to be thrown.</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">class</span><span class="pln"> </span><span class="typ">Node</span><span class="pun">&lt;</span><span class="pln">T</span><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> T data</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">Node</span><span class="pun">(</span><span class="pln">T data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setData</span><span class="pun">(</span><span class="pln">T data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="pln">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"Node.setData"</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MyNode</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">Node</span><span class="pun">&lt;</span><span class="typ">Integer</span><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">MyNode</span><span class="pun">(</span><span class="typ">Integer</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">super</span><span class="pun">(</span><span class="pln">data</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setData</span><span class="pun">(</span><span class="typ">Integer</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="pln">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="str">"MyNode.setData"</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">super</span><span class="pun">.</span><span class="pln">setData</span><span class="pun">(</span><span class="pln">data</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    <br>
+    <br>
+    See <a class="moz-txt-link-freetext" href="http://stackoverflow.com/questions/42804372">http://stackoverflow.com/questions/42804372</a> as well.<br>
+    <br>
+    Best regards<br>
+    Patrick<br>
+  </body>
+</html>
+
+</body>
+</html>
